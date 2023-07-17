@@ -4,7 +4,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const PORT = 4000 || process.env.Auth_PORT
 const AuthRoutes = require('./Routes/AuthRoutes');
-const DBConnection = require('../Shared/Config/Database');
+const DBConnection = require('./Config/Database');
 
 // Library -> Middleware
 app.use(cors())

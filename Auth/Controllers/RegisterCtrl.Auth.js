@@ -10,7 +10,7 @@ const registerCtrl = async (req, res) => {
     try {
         // taking data from body
         const { email, username, password, role } = req.body;
-
+        
         // // validating data
         // if (!EmailValidation(email)) {
         //     return res.status(401).json({ message: "Invalid E-mail format" });
@@ -20,15 +20,16 @@ const registerCtrl = async (req, res) => {
         // }
 
         // check email is already exits
-        // const emailAlreadyExists = await User.findOne({ email: email });
-        // if (emailAlreadyExists) {
-        //     return res.status(400).json({ message: "Email is already registered" });
-        // }
+        const emailAlreadyExists = await User.findOne({ email: email });
+        console.log('Email');
+        if (emailAlreadyExists) {
+            return res.status(400).json({ message: "Email is already registered" });
+        }
 
         // Hashed password
-        const saltRound = process.env.saltRound;
-        const salt = bcryptjs.genSalt(saltRound);
-        const hashedPassword = bcryptjs.hash(password, salt);
+        const saltRound = 10;
+        const salt = await bcryptjs.genSalt(saltRound);
+        const hashedPassword = await bcryptjs.hash(password, salt);
 
         // Creating User model
         const newUser = new User({
